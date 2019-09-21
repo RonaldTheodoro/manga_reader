@@ -3,15 +3,21 @@
 
 
 class Chapter(object):
+    _manga = None
     _link = None
     _number = None
     _title = None
     _pages = []
 
-    def __init__(self, link, number, title):
+    def __init__(self, manga, link, number, title):
+        self._manga = manga
         self._link = link
         self._number = number
         self._title = title
+
+    @property
+    def manga(self):
+        return self._manga
 
     @property
     def link(self):
