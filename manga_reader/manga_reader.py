@@ -14,7 +14,7 @@ import utils
 class MangaReaderWorker(object):
     session = requests.Session()
 
-    URL_BASE = u'https://www.mangareader.net'
+    URL_BASE = 'https://www.mangareader.net'
     URL_LIST = urllib.parse.urljoin(URL_BASE, 'alphabetical')
 
     BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
