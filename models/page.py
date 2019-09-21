@@ -5,12 +5,15 @@ import utils
 
 
 class Page(object):
+    _chapter = None
     _number = None
     _page_link = None
     _img_link = None
     _img_file = None
 
-    def __init__(self, number, page_link, img_link=None, img_file=None):
+    def __init__(
+            self, chapter, number, page_link, img_link=None, img_file=None):
+        self._chapter = chapter
         self._number = number
 
         if utils.is_url(page_link):
@@ -23,6 +26,10 @@ class Page(object):
 
         if img_file is not None:
             self._img_file = img_file
+
+    @property
+    def chapter(self):
+        return self._chapter
 
     @property
     def number(self):
