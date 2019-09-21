@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import os
+import re
 import urllib
 
 import lxml.html
@@ -51,7 +52,52 @@ class MangaReaderWorker(object):
     def download_mangas(self):
         """Download the mangas.
         """
-        pass
+        for manga in self.mangas:
+            response = self._get_page(manga.link)
+            manga.chapters = self._get_chapters(response)
+
+    def _get_chapters(self, response):
+        root = self._create_html_element_instance(response)
+        chapters = []
+        for chapter in root.xpath('//table[@id="listing"]//tr[not(@class)]'):
+            link, = chapter.xpath('.//a/@href')
+            number = self._parsing_chapter_number(chapter, './/a/text()')
+            title = self._parsing_chapter_title(
+                chapter,
+                './/td/text()[preceding-sibling::a]'
+            )
+            chapters.append(models.Chapter(link, number, title))
+        return chapters
+
+    def _parsing_chapter_number(self, chapter, xpath):
+        """Parsing the chapter number.
+
+        Args:
+            chapter (lxml.html.HtmlElement): HTML Element.
+            xpath (str): XPath expresion.
+
+        Returns:
+            int: Chapter number.
+        """
+        number, = chapter.xpath(xpath)
+        chapter_number = re.search(r'(?P<number>\d+)$', number)
+        return int(chapter_number.group('number'))
+
+    def _parsing_chapter_title(self, chapter, xpath):
+        """Parsing the chapter title.
+
+        Args:
+            chapter (lxml.html.HtmlElement): HTML Element.
+            xpath (str): XPath expresion.
+
+        Returns:
+            str: Chapter title.
+        """
+        title, = chapter.xpath(xpath)
+        chapter_title = re.search(r' : (?P<title>.*)', title)
+        if not chapter_title.group('title'):
+            return None
+        return chapter_title.group('title')
 
     @property
     def mangas(self):
