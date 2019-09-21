@@ -19,7 +19,13 @@ class Manga(object):
             if key.startswith('_'):
                 key = key.strip('_')
                 attrs.append(f'{key}={value}')
-        return f'<{self.__class__.__name__}({attrs})>'
+        return f'{self.__class__.__name__}({", ".join(attrs)})'
+
+    def __len__(self):
+        return len(self._chapters)
+
+    def __getitem__(self, position):
+        return self._chapters[position]
 
     @property
     def title(self):
