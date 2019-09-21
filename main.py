@@ -30,7 +30,7 @@ class MangaReaderWorker(object):
     URL_LIST = urllib.parse.urljoin(URL_BASE, 'alphabetical')
 
     BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-    MANGAS_DIR = os.path.join(BASE_DIR, 'mangas')
+    _mangas_dir = os.path.join(BASE_DIR, 'mangas')
 
     _mangas = []
 
