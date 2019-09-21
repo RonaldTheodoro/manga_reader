@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+from slugify import slugify
 
 from .model import Model
 
@@ -18,6 +19,10 @@ class Manga(Model):
     @property
     def title(self):
         return self._title
+
+    @property
+    def slug(self):
+        return slugify(self._title)
 
     @property
     def link(self):
