@@ -4,4 +4,5 @@
 
 class Chapter(object):
     _number = None
+    _title = None
     _pages = []
