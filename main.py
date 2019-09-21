@@ -61,13 +61,13 @@ class MangaReaderWorker(object):
             list[models.Mangas]: List of mangas.
         """
         if not self._mangas:
-            response = self.get_page(self.URL_LIST)
+            response = self._get_page(self.URL_LIST)
 
             self._parsing_mangas_links(response)
 
         return self._mangas
 
-    def get_page(self, url):
+    def _get_page(self, url):
         """Make a request and return the site response.
 
         Args:
