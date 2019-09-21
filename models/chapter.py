@@ -28,3 +28,7 @@ class Chapter(object):
     @property
     def pages(self):
         return self._pages
+
+    @pages.setter
+    def pages(self, pages):
+        self._pages = pages
