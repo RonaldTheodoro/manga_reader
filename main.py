@@ -86,8 +86,7 @@ class MangaReaderWorker(object):
         Args:
             response (requests.models.Response): Page response.
         """
-        root = lxml.html.fromstring(response.content, base_url=self.URL_BASE)
-        root.make_links_absolute()
+        root = self._create_html_element_instance(response)
 
         for manga in root.xpath('//ul[@class="series_alpha"]/li')[:2]:
             link, = manga.xpath('./a')
@@ -103,6 +102,19 @@ class MangaReaderWorker(object):
                 is_completed=is_completed,
             )
             self._mangas.append(manga_obj)
+
+    def _create_html_element_instance(self, response):
+        """Create a HtmlElement instance with the site response.
+
+        Args:
+            response (requests.models.Response): Page response.
+
+        Returns:
+            lxml.html.HtmlElement: HTML Element.
+        """
+        root = lxml.html.fromstring(response.text, base_url=self.URL_BASE)
+        root.make_links_absolute()
+        return root
 
 
 if __name__ == "__main__":
