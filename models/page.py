@@ -14,7 +14,7 @@ class Page(object):
     def __init__(
             self, chapter, number, page_link, img_link=None, img_file=None):
         self._chapter = chapter
-        self._number = number
+        self._number = int(number)
 
         if utils.is_url(page_link):
             self._page_link = page_link
@@ -26,6 +26,14 @@ class Page(object):
 
         if img_file is not None:
             self._img_file = img_file
+
+    def __repr__(self):
+        attrs = []
+        for key, value in self.__dict__.items():
+            if key.startswith('_'):
+                key = key.strip('_')
+                attrs.append(f'{key}={value}')
+        return f'{self.__class__.__name__}({", ".join(attrs)})'
 
     @property
     def chapter(self):

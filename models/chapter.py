@@ -12,7 +12,7 @@ class Chapter(object):
     def __init__(self, manga, link, number, title):
         self._manga = manga
         self._link = link
-        self._number = number
+        self._number = int(number)
         self._title = title
 
     def __repr__(self):
