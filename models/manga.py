@@ -37,5 +37,9 @@ class Manga(object):
     def chapters(self):
         return self._chapters
 
+    @chapters.setter
+    def chapters(self, chapters):
+        self._chapters = chapters
+
     def download_chapters(self):
         raise NotImplemented
