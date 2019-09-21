@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+import os
+
 from .model import Model
 
 
@@ -39,3 +41,7 @@ class Chapter(Model):
     @pages.setter
     def pages(self, pages):
         self._items = pages
+
+    @property
+    def path(self):
+        return os.path.join(self.manga.path, str(self.number))

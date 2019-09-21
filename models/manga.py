@@ -21,10 +21,6 @@ class Manga(Model):
         return self._title
 
     @property
-    def slug(self):
-        return slugify(self._title)
-
-    @property
     def link(self):
         return self._link
 
@@ -40,3 +36,6 @@ class Manga(Model):
     def chapters(self, chapters):
         self._items = chapters
 
+    @property
+    def path(self):
+        return slugify(self._title)

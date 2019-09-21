@@ -18,3 +18,6 @@ class Model(object):
 
     def __getitem__(self, position):
         return self._items[position]
+
+    def path(self):
+        raise NotImplementedError()

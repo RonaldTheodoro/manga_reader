@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+import os
+
 import utils
 from .model import Model
 
@@ -58,3 +60,7 @@ class Page(Model):
     @img_file.setter
     def img_file(self, img_file):
         self._img_file = img_file
+
+    @property
+    def path(self):
+        return os.path.join(self.chapter.path, str(self.number))
