@@ -34,8 +34,10 @@ class MangaReaderWorker(object):
 
     _mangas = []
 
-    def __init__(self):
-        self._create_directory(self.MANGAS_DIR)
+    def __init__(self, **kwargs):
+        if 'mangas_dir' in kwargs:
+            self._mangas_dir = kwargs['mangas_dir']
+        self._create_directory(self._mangas_dir)
 
     def _create_directory(self, directory):
         """Checks if a directory exists and if not create it.
