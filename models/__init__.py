@@ -3,6 +3,7 @@
 
 from .manga import Manga
 from .chapter import Chapter
+from .page import Page
 
 
-__all__ = ['Manga', 'Chapter']
+__all__ = ['Manga', 'Chapter', 'Page']
