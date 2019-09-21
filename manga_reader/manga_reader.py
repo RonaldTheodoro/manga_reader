@@ -28,10 +28,9 @@ class MangaReaderWorker(object):
         utils.create_directory(self._mangas_dir)
 
     def download_mangas(self):
-        """Download the mangas.
-        """
+        """Download the mangas."""
         for manga in self.mangas:
-            response = self._get_page(manga.link)
+            response = self._make_request(manga.link)
             manga.chapters = self._get_chapters(response)
 
     @property
@@ -42,13 +41,13 @@ class MangaReaderWorker(object):
             list[models.Mangas]: List of mangas.
         """
         if not self._mangas:
-            response = self._get_page(self.URL_LIST)
+            response = self._make_request(self.URL_LIST)
 
             self._parsing_mangas_links(response)
 
         return self._mangas
 
-    def _get_page(self, url):
+    def _make_request(self, url):
         """Make a request and return the site response.
 
         Args:
