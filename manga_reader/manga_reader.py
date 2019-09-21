@@ -31,7 +31,7 @@ class MangaReaderWorker(object):
         """Download the mangas."""
         for manga in self.mangas:
             response = self._make_request(manga.link)
-            manga.chapters = self._get_chapters(response)
+            manga.chapters = self._get_chapters(manga, response)
 
     @property
     def mangas(self):
@@ -83,17 +83,16 @@ class MangaReaderWorker(object):
             )
             self._mangas.append(manga_obj)
 
-    def _get_chapters(self, response):
+    def _get_chapters(self, manga, response):
         root = utils.create_html_element_instance(response, self.URL_BASE)
         chapters = []
         for chapter in root.xpath('//table[@id="listing"]//tr[not(@class)]'):
             link, = chapter.xpath('.//a/@href')
             number = self._parsing_chapter_number(chapter, './/a/text()')
             title = self._parsing_chapter_title(
-                chapter,
-                './/td/text()[preceding-sibling::a]'
+                chapter, './/td/text()[preceding-sibling::a]'
             )
-            chapters.append(models.Chapter(link, number, title))
+            chapters.append(models.Chapter(manga, link, number, title))
         return chapters
 
     def _parsing_chapter_number(self, chapter, xpath):
