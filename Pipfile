@@ -12,6 +12,7 @@ betamax-serializers = "*"
 [packages]
 requests = "*"
 lxml = "*"
+python-slugify = "*"
 
 [requires]
 python_version = "3.6"
