@@ -32,6 +32,9 @@ class MangaReaderWorker(object):
         for manga in self.mangas:
             response = self._make_request(manga.link)
             manga.chapters = self._get_chapters(manga, response)
+            for chapter in manga.chapters:
+                response = self._make_request(chapter.link)
+                chapter.pages = self._get_pages(chapter, response)
 
     @property
     def mangas(self):
@@ -94,6 +97,16 @@ class MangaReaderWorker(object):
             )
             chapters.append(models.Chapter(manga, link, number, title))
         return chapters
+
+    def _get_pages(self, chapter, response):
+        root = utils.create_html_element_instance(response, self.URL_BASE)
+        pages = []
+        for page in root.xpath('//select[@id="pageMenu"]/option'):
+            number, = page.xpath('./text()')
+            page_link, = page.xpath('./@value')
+            page_link = urllib.parse.urljoin(self.URL_BASE, page_link)
+            pages.append(models.Page(chapter, number, page_link))
+        return pages
 
     def _parsing_chapter_number(self, chapter, xpath):
         """Parsing the chapter number.
