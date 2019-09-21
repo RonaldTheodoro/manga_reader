@@ -2,30 +2,18 @@
 # -*- coding: utf-8 -*-
 
 
-class Manga(object):
+from .model import Model
+
+
+class Manga(Model):
     _title = None
     _link = None
     _is_completed = None
-    _chapters = []
 
     def __init__(self, title, link, is_completed):
         self._title = title
         self._link = link
         self._is_completed = is_completed
-
-    def __repr__(self):
-        attrs = []
-        for key, value in self.__dict__.items():
-            if key.startswith('_'):
-                key = key.strip('_')
-                attrs.append(f'{key}={value}')
-        return f'{self.__class__.__name__}({", ".join(attrs)})'
-
-    def __len__(self):
-        return len(self._chapters)
-
-    def __getitem__(self, position):
-        return self._chapters[position]
 
     @property
     def title(self):
@@ -41,11 +29,9 @@ class Manga(object):
 
     @property
     def chapters(self):
-        return self._chapters
+        return self._items
 
     @chapters.setter
     def chapters(self, chapters):
-        self._chapters = chapters
+        self._items = chapters
 
-    def download_chapters(self):
-        raise NotImplemented

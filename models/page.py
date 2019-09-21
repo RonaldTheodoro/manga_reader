@@ -2,9 +2,10 @@
 # -*- coding: utf-8 -*-
 
 import utils
+from .model import Model
 
 
-class Page(object):
+class Page(Model):
     _chapter = None
     _number = None
     _page_link = None
@@ -26,14 +27,6 @@ class Page(object):
 
         if img_file is not None:
             self._img_file = img_file
-
-    def __repr__(self):
-        attrs = []
-        for key, value in self.__dict__.items():
-            if key.startswith('_'):
-                key = key.strip('_')
-                attrs.append(f'{key}={value}')
-        return f'{self.__class__.__name__}({", ".join(attrs)})'
 
     @property
     def chapter(self):
