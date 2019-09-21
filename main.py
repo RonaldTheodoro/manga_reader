@@ -63,7 +63,7 @@ class MangaReaderWorker(object):
         if not self._mangas:
             response = self.get_page(self.URL_LIST)
 
-            self._parsing_mangas(response)
+            self._parsing_mangas_links(response)
 
         return self._mangas
 
@@ -80,6 +80,7 @@ class MangaReaderWorker(object):
         response.raise_for_status()
         return response
 
+    def _parsing_mangas_links(self, response):
         """Parsing all mangas links.
 
         Args:
