@@ -38,14 +38,26 @@ class MangaReaderWorker(object):
         self._create_directory(self.MANGAS_DIR)
 
     def _create_directory(self, directory):
+        """Checks if a directory exists and if not create it.
+
+        Args:
+            directory (str): Directory path.
+        """
         if not os.path.exists(directory):
             os.mkdir(directory)
 
     def download_mangas(self):
+        """Download the mangas.
+        """
         pass
 
     @property
     def mangas(self):
+        """Return a list with all mangas avabile,
+
+        Returns:
+            list[models.Mangas]: List of mangas.
+        """
         if not self._mangas:
             response = self.get_page(self.URL_LIST)
 
@@ -54,11 +66,23 @@ class MangaReaderWorker(object):
         return self._mangas
 
     def get_page(self, url):
+        """Make a request and return the site response.
+
+        Args:
+            url (str): URL page
+
+        Returns:
+            requests.models.Response: Page response.
+        """
         response = self.session.get(url)
         response.raise_for_status()
         return response
 
-    def _parsing_mangas(self, response):
+        """Parsing all mangas links.
+
+        Args:
+            response (requests.models.Response): Page response.
+        """
         root = lxml.html.fromstring(response.content, base_url=self.URL_BASE)
         root.make_links_absolute()
 
